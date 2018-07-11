@@ -32,7 +32,7 @@ class Clean_stock_data():
         for key, each in grouped:
             files = each['fname'].tolist()
             fnames.append(files)
-        print('file name:', fnames)
+        print('dir name:', fnames)
 
         return fnames
 
@@ -171,13 +171,14 @@ class Clean_stock_data():
     def main(self):
         result_p = os.getcwd()+'/kchart_output/1w/'
         # concat all the file together
-        fnames = self.get_fname()
+        dir_names = self.get_fname()
 
-        for names in fnames:
+        for names in dir_names:
             dir_name = names[0][:-6]
             # p = os.getcwd()
             date_path = '%s%s/'%(result_p,dir_name)
-            os.mkdir(date_path, 0o777)
+            if not os.path.exists(date_path):
+                os.mkdir(date_path, 0o777)
             self.get_df(names)
             # get index of different stocks
             self.get_stocks()
